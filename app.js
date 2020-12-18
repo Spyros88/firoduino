@@ -1,14 +1,14 @@
 var bitcore = require('zcore-lib');
 var RpcClient = require('bitcoind-rpc-zcoin');
-
+require('dotenv').config()
   var config = {
     protocol: 'http',
-    user: 'admin',
-    pass: 'admin123',
+    user: process.env.RPC_USER,
+    pass: process.env.RPC_PASS,
     host: '127.0.0.1',
     port: '8888',
   };
-
+  
   var rpc = new RpcClient(config);
 
   var txids = [];
@@ -33,10 +33,19 @@ var RpcClient = require('bitcoind-rpc-zcoin');
           console.error(err);
           return setTimeout(showNewTransactions, 10000);
         }
-
+//aHcgPuKwmYFMgHoEzxFD95GAxJg76Gnagc
         rawtxs.map(function (rawtx) {
-          var tx = new bitcore.Transaction(rawtx.result);
-          console.log('\n\n\n' + tx.id + ':', tx.toObject());
+          rpc.decodeRawTransaction(rawtx.result, function (err, ret) {
+                console.log(ret.result)
+              for (var i = 0; i < ret.result.vout.length; i++) {
+                    if (ret.result.vout[i].scriptPubKey.addresses[0] == 'aHcgPuKwmYFMgHoEzxFD95GAxJg76Gnagc' ){
+                        console.log('Received coins')
+                    }  
+
+              }
+          })
+          //var tx = new bitcore.Transaction(rawtx.result);
+          //console.log('\n\n\n' + tx.id + ':', tx.toObject());
         });
 
         txids = ret.result;

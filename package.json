@@ -9,7 +9,9 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "zcore-lib": "^0.15.99",
-    "bitcoind-rpc-zcoin": "*"
+    "bitcoind-rpc-zcoin": "*",
+    "dotenv": "^8.2.0",
+    "serialport": "^9.0.4",
+    "zcore-lib": "^0.15.99"
   }
 }
